@@ -11,13 +11,13 @@ This script helps to remove redundant (not unique) parts of filenames
 * The script accepts globbing ('*' and such)"
 
 NOTE: Works only on files in the current directory\
-NOTE: When using globbing make sure not to include the script filename\
+NOTE: When using globbing make sure not to include the script filename
 
-\# USAGE #
+\# USAGE #\
 `$0 FILE1 FILE2...`\
 `Longest shared sequence is: ... `\
 `Do you want to remove this sequence from the filenames? [y/n]`\
 `Do you want to keep the old files? [y/n]`\
-`Script $0 is done`\
+`Script $0 is done`
 
 
