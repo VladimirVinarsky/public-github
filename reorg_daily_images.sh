@@ -51,14 +51,14 @@ mkdir "$reorg"
 
 for file in ${1}/*/*.@${ext}
 do
-date_folder=$(dirname "${file}")
+date_folder="$(dirname "${file}")"
 date_folder="${date_folder##*/}"
-new_date_folder=$(date_parser "${date_folder}")
+new_date_folder="$(date_parser "${date_folder}")"
 
-filename=$(basename "${file}")
+filename="$(basename "${file}")"
 cell_id="${filename%%[_.]*}"
 cell_id="${cell_id/#\#/}"
-cell_id=$(printf "%.4d" "${cell_id}")
+cell_id="$(printf "%.4d" "${cell_id}")"
 cell_id="CellLine_#${cell_id}"
 details="${filename#*[_.]}"
 
