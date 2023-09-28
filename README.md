@@ -23,3 +23,26 @@ NOTE: When using globbing make sure not to include the script filename
 `Script $0 is done`
 
 
+## `reorganize_daily_images.sh`
+
+This script reorganizes images stored in chronologically labelled folders into image ID labelled folders while sorting
+them by date.
+
+\# INFO #
+ 
+Usage: $0 <parent-folder>                  \
+Supply path to <parent-folder> which contains multiple <sub-folders>.\
+\
+Each <sub-folder> contains images taken in one day.\
+Example <sub-folder>: 11-10-2023.\
+\
+The image names start with CellLineId: #0001 - #9999 which is followed by details (objective,comment etc).\
+Example image: #0003_sparse_good-morpholgy_10x.tif\
+\
+The script will bring together images of each CellLineId and sort them from newest to oldest\
+Reorganized images will appear in 'Reorganized' folder\
+\
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\
+                          >  Let's go  <                             \
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\
+\
