@@ -70,6 +70,9 @@ if ! [ -n "${longest_sequence}" ]
 	exit 0
 else         
 	echo "Longest shared sequence is : ${longest_sequence}"
+		for file in "${strings[@]}"
+		do echo "${file} becomes "${file/"${longest_sequence}"/}""
+		done
 	read -p "Do you want to remove this sequence from the filenames? [y/n]: " remove
 	if [ $remove = "y" ]
 		then
@@ -99,4 +102,3 @@ fi
 echo ""
 echo "Script $0 is done"
 echo ""
-
