@@ -31,11 +31,19 @@ fi
 ## Longest common string search ## 
 declare -a strings=("$@")
 # Get the first string to use as a reference
-declare -a base_strings=$(basename -a "${strings[@]}")
+for i in "${!strings[@]}"
+do 
+base_strings[i]=$(basename ${strings[i]})
+# declare -a base_strings=$(basename -a "${strings[@]}")
+done
 
-for name in "${base_strings[@]}"; do echo "${name}" ; done
-exit 0
-reference="${strings[0]}"
+# for name in "${base_strings[@]}"; do echo "${name}" ; done
+
+# echo "${base_strings[1]}"
+
+# exit 0
+
+reference="${base_strings[0]}"
 # Strip the extension from the reference to excluded it from the search 
 reference="${reference%.*}"
 
@@ -48,7 +56,7 @@ for ((i=0; i<${#reference}; i++)); do
 
         # Check if the sequence is shared among all strings
         shared=true
-        for string in "${strings[@]:1}"; do
+        for string in "${base_strings[@]:1}"; do
             if [[ "$string" != *"$sequence"* ]]; then
                 shared=false
                 break
@@ -74,7 +82,7 @@ else
 ' ${longest_sequence} ' is the longest shared sequence
 If you delete the sequence, the files will look like this:
 		"
-		for file in "${strings[@]}"
+		for file in "${base_strings[@]}"
 		do echo "${file}  =>  "${file/"${longest_sequence}"/}" "
 		done
 	echo "
@@ -88,7 +96,7 @@ NOTE: If new filenames look squashed, you can replace the sequence with somethin
 		echo "
 If you replace the sequence, the files will look like this:
 "
-		for file in "${strings[@]}"
+		for file in "${base_strings[@]}"
 		do echo "${file} => "${file/"${longest_sequence}"/"${replacement}"}""
 		done
 		read -p "Do you want to proceed? [y/n]: " proceed
