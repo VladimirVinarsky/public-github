@@ -14,7 +14,6 @@ if [ $# -lt 1 ]
 The script "$0" removes the longest shared (redundant) part of filenames supplied to the script
 After finding the longest common sequence you can choose if you want to remove it or replace
 The script accepts globbing ('*' and such)
-NOTE: Works only on files in the current directory, not recursively
 
 # USAGE #
 $0 FILE1 FILE2...
@@ -30,19 +29,14 @@ fi
 
 ## Longest common string search ## 
 declare -a strings=("$@")
-# Get the first string to use as a reference
+
+# Get the name of the files in case the script goes into directories 
 for i in "${!strings[@]}"
 do 
 base_strings[i]=$(basename ${strings[i]})
-# declare -a base_strings=$(basename -a "${strings[@]}")
 done
 
-# for name in "${base_strings[@]}"; do echo "${name}" ; done
-
-# echo "${base_strings[1]}"
-
-# exit 0
-
+# Get the first string to use as a reference
 reference="${base_strings[0]}"
 # Strip the extension from the reference to excluded it from the search 
 reference="${reference%.*}"
