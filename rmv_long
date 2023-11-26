@@ -31,6 +31,10 @@ fi
 ## Longest common string search ## 
 declare -a strings=("$@")
 # Get the first string to use as a reference
+declare -a base_strings=$(basename -a "${strings[@]}")
+
+for name in "${base_strings[@]}"; do echo "${name}" ; done
+exit 0
 reference="${strings[0]}"
 # Strip the extension from the reference to excluded it from the search 
 reference="${reference%.*}"
