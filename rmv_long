@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # This script helps to remove redundant (not unique) parts of filenames
 # Written by Vladimir Vinarsky
@@ -10,25 +9,23 @@
 # when no arguments are supplied
 if [ $# -lt 1 ]
 	then
-	echo ""
-	echo "Please supply files as arguments"
-	echo ""
-	echo "# INFO # "
-	echo "The script "$0" removes the longest shared (redundant) part of filenames supplied to the script"
-	echo "After finding the common sequence you can choose if you want to remove it from the filenames"
-	echo "You can decide if you want to keep a copy of files with the old filenames"
-	echo "The script accepts globbing ('*' and such)"
-	echo "NOTE: Works only on files in the current directory"
-	echo "NOTE: When using globbing make sure not to include the script filename"
-	echo ""
-	echo "# USAGE #"
-	echo "$0 FILE1 FILE2..."
-	echo "Longest shared sequence is: ... "
-	echo "Do you want to remove this sequence from the filenames? [y/n]"
-	echo "Do you want to keep the old files? [y/n]"
-	echo "Script $0 is done."
-	echo ""
-	exit 0
+	echo "
+# INFO # 
+The script "$0" removes the longest shared (redundant) part of filenames supplied to the script
+After finding the longest common sequence you can choose if you want to remove it or replace
+The script accepts globbing ('*' and such)
+NOTE: Works only on files in the current directory, not recursively
+
+# USAGE #
+$0 FILE1 FILE2...
+
+'<sequence>' is the longest shared sequence among the files 
+Do you want to delete/remove '<sequence>' from filenames? [y/n]:
+Type a sequence to replace ' <sequence> ' or press <Enter> to simply delete it: <new-sequence> 
+Do you want to proceed? [y/n]:
+Script $0 is done.
+"
+exit 0
 fi
 
 ## Longest common string search ## 
@@ -69,32 +66,47 @@ if ! [ -n "${longest_sequence}" ]
 	echo ""
 	exit 0
 else         
-	echo "Longest shared sequence is : ${longest_sequence}"
+	echo "
+' ${longest_sequence} ' is the longest shared sequence
+If you delete the sequence, the files will look like this:
+		"
 		for file in "${strings[@]}"
-		do echo "${file} becomes "${file/"${longest_sequence}"/}""
+		do echo "${file}  =>  "${file/"${longest_sequence}"/}" "
 		done
-	read -p "Do you want to remove this sequence from the filenames? [y/n]: " remove
+	echo "
+NOTE: If new filenames look squashed, you can replace the sequence with something new
+"
+	read -p "Delete/replace the sequence from the filenames? [y/n]: " remove
 	if [ $remove = "y" ]
 		then
-		read -p "Do you want to keep the old files? [y/n]: " keep
-		if [ $keep = "y" ]
-	  		then
-			echo "Creating copies.."
-			for file in "${strings[@]}"
-	  			do 
-				cp "${file}" "${file/"${longest_sequence}"/}"
-	  		done
-  		else
-			echo "Not creating copies..." 
+		read -p "Type a sequence to replace ' ${longest_sequence} ' or press <Enter> to simply delete it: " replacement
+
+		echo "
+If you replace the sequence, the files will look like this:
+"
+		for file in "${strings[@]}"
+		do echo "${file} => "${file/"${longest_sequence}"/"${replacement}"}""
+		done
+		read -p "Do you want to proceed? [y/n]: " proceed
+		if [ $proceed = "y" ]
+		then
 			for file in "${strings[@]}"
 	  			do
-				mv "${file}" "${file/"${longest_sequence}"/}"
+				mv "${file}" "${file/"${longest_sequence}"/"${replacement}"}"
 	  		done
+		else
+		echo "
+Not changing anything
+Script $0 is done
+"
+			exit 0
         	fi
 	else 
 		echo ""	
-		echo "Not changing anything"
-		echo "Script $0 is done"
+		echo "
+Not changing anything
+Script $0 is done
+"
 		exit 0
 	fi
 fi
