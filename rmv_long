@@ -93,7 +93,8 @@ If you replace the sequence, the files will look like this:
 		for file in "${base_strings[@]}"
 		do echo "${file} => "${file/"${longest_sequence}"/"${replacement}"}""
 		done
-		read -p "Do you want to rename the files? (Not reversible) [y/n]: " proceed
+		echo ""
+		read -p "Do you want to rename the files? (not reversible) [y/n]: " proceed
 		if [ $proceed = "y" ]
 		then
 			for file in "${strings[@]}"
