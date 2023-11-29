@@ -1,7 +1,8 @@
+#!/bin/bash
 
 # This script helps to remove redundant (not unique) parts of filenames
 # Written by Vladimir Vinarsky
-# 18-08-2023
+# 29-11-2023
 # Licence: GPL2 and higher
 
 
